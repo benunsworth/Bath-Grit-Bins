@@ -50,7 +50,7 @@ var gritIcon = L.icon({
 		console.log(result);
 		L.marker([result.location.latitude, result.location.longitude], {icon: gritIcon})
 			.bindPopup(
-				'<h4>' + marker.notes + '<h4>'
+				'<h4>' + result.notes + '<h4>'
 			)
 			.addTo(map);
 	})
