@@ -25,7 +25,7 @@
 <div id="map"></div>
 
 	<script>
-// API Call to Bath: Hacked Datastore, filter for location and notes columns only
+// Use jQuery's getJSON() to make API Call to Bath: Hacked Datastore, filter for location and notes columns only
   $.getJSON('http://data.bathhacked.org/resource/p3ch-yw3f.json?$select=location,%20notes', function(results) {
   console.log(results.data);
 
@@ -36,6 +36,7 @@
     	maxZoom: 18
 	}).addTo(map);
 
+// Replace standard leaflet popup with a grit icon
 var gritIcon = L.icon({
 	iconUrl: 'img/gritbin.png',
 
@@ -43,10 +44,15 @@ var gritIcon = L.icon({
 	iconAnchor: 	[16, 37], // set icon anchor point
 	popupAnchor: 	[1, -37]  // point from which the popup opens relative to the icon anchor
 });
-// Iterate through API data and place markers on the map
+
+// Iterate through API data and place markers on the map, with information from notes column in datastore
 	results.forEach(function(result){
 		console.log(result);
-		L.marker([result.location.latitude, result.location.longitude], {icon: gritIcon}).addTo(map);
+		L.marker([result.location.latitude, result.location.longitude], {icon: gritIcon})
+			.bindPopup(
+				'<h4>' + marker.notes + '<h4>'
+			)
+			.addTo(map);
 	})
 
 });
